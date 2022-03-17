@@ -14,15 +14,17 @@ jobs:
       with:
         java-version: '11'
         distribution: 'adopt'
+    - uses: actions/setup-node@v3
+      with:
+        node-version: '16'
+        cache: 'npm'
     - run: |
         curl -L -O https://github.com/flix/flix/releases/download/v0.26.0/flix.jar
         java -jar flix.jar test
+        java -jar flix.jar build
+        java -jar flix.jar build-jar
         java -jar flix.jar build-pkg
-    - uses: actions/upload-artifact@v3
-      with:
-        name: build result
-        path: build
-    - uses: actions/upload-artifact@v3
-      with:
-        name: pkg file
-        path: flix-playground.fpkg
+        npm ci
+        npx semantic-release
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
