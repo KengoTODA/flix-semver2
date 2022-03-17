@@ -8,9 +8,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: Set up JDK 11
-      uses: actions/setup-java@v2
+      uses: actions/setup-java@v3
       with:
         java-version: '11'
         distribution: 'adopt'
@@ -18,11 +18,11 @@ jobs:
         curl -L -O https://github.com/flix/flix/releases/download/v0.26.0/flix.jar
         java -jar flix.jar test
         java -jar flix.jar build-pkg
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v3
       with:
         name: build result
         path: build
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v3
       with:
         name: pkg file
         path: flix-playground.fpkg
