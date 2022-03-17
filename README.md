@@ -18,6 +18,13 @@ def isVersion1(text: String): Bool = match parse(text) {
 }
 ```
 
+You can install the fpkg file by the following command:
+
+```console
+$ java -jar flix.jar install KengoTODA/flix-semver2
+$ ls lib/KengoTODA/flix-semver2/flix-semver2.fpkg
+```
+
 # Copyright
 
 Copyright &copy; 2022 Kengo TODA all rights reserved.
