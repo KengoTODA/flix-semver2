@@ -1,5 +1,7 @@
 build
 flix.jar
 flix-semver2.fpkg
+flix-semver2.fpkg.sha256
+flix-semver2.fpkg.sha512
 flix-semver2.jar
 node_modules

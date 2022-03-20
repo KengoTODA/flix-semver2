@@ -22,9 +22,9 @@ jobs:
         curl -L -O https://github.com/flix/flix/releases/download/v0.26.0/flix.jar
         java -jar flix.jar test
         java -jar flix.jar build
-        java -jar flix.jar build-jar
         java -jar flix.jar build-pkg
         npm ci
+        npm run compute-hash
         npx semantic-release
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
