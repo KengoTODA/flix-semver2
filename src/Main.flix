@@ -80,9 +80,9 @@ namespace SemVer2 {
   instance Order[SemVer2] {
     @Time(1) @Space(1)
     pub def compare(l: SemVer2, r: SemVer2): Comparison =
-      if      (getMajor(l) != getMajor(r)) Comparison.fromInt(getMajor(l) - getMajor(r))
-      else if (getMinor(l) != getMinor(r)) Comparison.fromInt(getMinor(l) - getMinor(r))
-      else if (getPatch(l) != getPatch(r)) Comparison.fromInt(getPatch(l) - getPatch(r))
+      if      (getMajor(l) != getMajor(r)) Comparison.fromInt32(getMajor(l) - getMajor(r))
+      else if (getMinor(l) != getMinor(r)) Comparison.fromInt32(getMinor(l) - getMinor(r))
+      else if (getPatch(l) != getPatch(r)) Comparison.fromInt32(getPatch(l) - getPatch(r))
       else if (comparePreRelease(l, r) != EqualTo) comparePreRelease(l, r)
       else compareBuild(l, r)
   }
