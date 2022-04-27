@@ -26,5 +26,6 @@ jobs:
         npm ci
         npm run compute-hash
         npx semantic-release
+        ./gradlew build
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
