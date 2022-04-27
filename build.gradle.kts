@@ -1,7 +1,7 @@
 import jp.skypencil.flix.FlixCompile
 import jp.skypencil.flix.FlixTest
 plugins {
-    id("jp.skypencil.flix-base") version "1.1.1"
+    id("jp.skypencil.flix-base") version "1.1.2"
 }
 
 val compileFlix = tasks.register<FlixCompile>("compileFlix") {
