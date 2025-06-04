@@ -8,14 +8,12 @@ function computeHash(
     const sha256 = createHash("sha256");
     const sha512 = createHash("sha512");
     const r = createReadStream(path);
-    r.on("data", () => {
-      const data = r.read();
-      if (data) {
-        sha256.update(data);
-        sha512.update(data);
-      } else {
-        resolve({ sha256: sha256.digest("hex"), sha512: sha512.digest("hex") });
-      }
+    r.on("data", (data) => {
+      sha256.update(data);
+      sha512.update(data);
+    });
+    r.on("end", () => {
+      resolve({ sha256: sha256.digest("hex"), sha512: sha512.digest("hex") });
     });
     r.on("error", (e) => {
       reject(e);
