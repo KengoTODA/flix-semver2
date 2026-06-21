@@ -7,7 +7,7 @@ A package handling the [semantic versioning v2](https://semver.org/spec/v2.0.0.h
 
 # Usage
 
-`SemVer2` is an algebraic data type with the [`Eq` type class](https://github.com/flix/flix/blob/v0.26.0/main/src/library/Eq.flix), [`ToString` type class](https://github.com/flix/flix/blob/v0.26.0/main/src/library/ToString.flix), and [`Order` type class](https://github.com/flix/flix/blob/v0.26.0/main/src/library/Order.flix).
+`SemVer2` is an algebraic data type with the `Eq`, `ToString`, and `Order` type classes.
 
 ```flix
 use SemVer2.parse;
@@ -23,6 +23,21 @@ You can install the fpkg file by the following command:
 ```console
 $ java -jar flix.jar install KengoTODA/flix-semver2
 $ ls lib/KengoTODA/flix-semver2/flix-semver2.fpkg
+```
+
+# Development
+
+This repository is built with the official Flix jar and pnpm.
+
+```console
+$ curl --fail --location --output flix.jar https://github.com/flix/flix/releases/download/v0.73.0/flix.jar
+$ echo "5f69225d2e2a5c029abb5a89b306c97e2fe0b2dcb8f51316df9e7ec986811943  flix.jar" | shasum -a 256 --check
+$ java -jar flix.jar test
+$ java -jar flix.jar build
+$ java -jar flix.jar build-pkg
+$ corepack enable
+$ pnpm install --frozen-lockfile
+$ pnpm run compute-hash
 ```
 
 # Copyright

@@ -1,0 +1,4 @@
+minimumReleaseAge: 4320
+strictDepBuilds: true
+trustPolicy: no-downgrade
+trustPolicyIgnoreAfter: 43200
