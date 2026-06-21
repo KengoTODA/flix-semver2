@@ -1,0 +1,61 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    ":dependencyDashboard",
+    "helpers:pinGitHubActionDigests"
+  ],
+  "labels": [
+    "dependencies"
+  ],
+  "lockFileMaintenance": {
+    "enabled": true,
+    "automerge": true,
+    "automergeType": "pr",
+    "schedule": [
+      "before 4am on monday"
+    ]
+  },
+  "packageRules": [
+    {
+      "description": "Automatically merge low-risk dependency maintenance after CI passes.",
+      "matchUpdateTypes": [
+        "minor",
+        "patch",
+        "pin",
+        "digest"
+      ],
+      "automerge": true,
+      "automergeType": "pr",
+      "platformAutomerge": true
+    },
+    {
+      "description": "Keep major updates manual.",
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "automerge": false
+    },
+    {
+      "description": "Keep Flix compiler updates manual because they can require source compatibility fixes and checksum refreshes.",
+      "matchPackageNames": [
+        "flix/flix"
+      ],
+      "automerge": false
+    }
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^\\.github\\/workflows\\/build\\.yml$/"
+      ],
+      "matchStrings": [
+        "FLIX_VERSION:\\s+(?<currentValue>v?\\d+\\.\\d+\\.\\d+)\\n\\s+FLIX_SHA256:\\s+(?<currentDigest>[a-f0-9]+)"
+      ],
+      "depNameTemplate": "flix/flix",
+      "datasourceTemplate": "github-releases",
+      "versioningTemplate": "semver"
+    }
+  ]
+}

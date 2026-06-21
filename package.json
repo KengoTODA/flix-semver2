@@ -2,6 +2,7 @@
   "name": "flix-semver2",
   "version": "1.0.0",
   "description": "A package handling the semantic versioning v2",
+  "packageManager": "pnpm@11.8.0",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/KengoTODA/flix-semver2.git"
@@ -12,18 +13,19 @@
     "url": "https://github.com/KengoTODA/flix-semver2/issues"
   },
   "engines": {
-    "node": ">= 16"
+    "node": "^22.14.0 || >=24.10.0"
   },
   "homepage": "https://github.com/KengoTODA/flix-semver2#readme",
   "scripts": {
-    "compute-hash": "ts-node compute-hash.ts flix-semver2.fpkg"
+    "compute-hash": "node compute-hash.mjs flix-semver2.fpkg"
   },
   "devDependencies": {
-    "@semantic-release/changelog": "^6.0.2",
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/commit-analyzer": "^13.0.1",
     "@semantic-release/git": "^10.0.1",
-    "@types/node": "^18.14.6",
-    "ts-node": "^10.9.2",
-    "typescript": "^4.9.5"
+    "@semantic-release/github": "^12.0.8",
+    "@semantic-release/release-notes-generator": "^14.1.1",
+    "semantic-release": "^25.0.5"
   },
   "release": {
     "branches": [
