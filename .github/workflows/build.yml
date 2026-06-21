@@ -41,6 +41,11 @@ jobs:
       run: |
         java -jar flix.jar build
         java -jar flix.jar build-pkg
+        fpkg="$(find . -name '*.fpkg' -type f | head -n 1)"
+        test -n "${fpkg}"
+        if [ "${fpkg}" != "./flix-semver2.fpkg" ]; then
+          cp "${fpkg}" flix-semver2.fpkg
+        fi
         pnpm run compute-hash
     - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
       with:
