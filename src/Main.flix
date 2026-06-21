@@ -1,13 +1,13 @@
 mod SemVer2 {
-  type alias PreRelease = String
-  type alias Build = String
-
   pub enum SemVer2 with Eq {
     case Standard(Int32, Int32, Int32),
-    case WithPreRelease(Int32, Int32, Int32, PreRelease)
-    case WithBuild(Int32, Int32, Int32, Build)
-    case WithPreReleaseAndBuild(Int32, Int32, Int32, PreRelease, Build)
+    case WithPreRelease(Int32, Int32, Int32, String)
+    case WithBuild(Int32, Int32, Int32, String)
+    case WithPreReleaseAndBuild(Int32, Int32, Int32, String, String)
   }
+
+  type alias PreRelease = String
+  type alias Build = String
 
   pub def getMajor(v: SemVer2): Int32 = match v {
     case Standard(x,_,_) => x
@@ -81,10 +81,22 @@ mod SemVer2 {
       else compareBuild(l, r)
   }
 
+  def parseInts(l: List[String]): Result[String, List[Int32]] =
+    match l {
+      case Nil => Ok(Nil)
+      case x :: xs => match Int32.fromString(x) {
+        case Some(i) => match parseInts(xs) {
+          case Ok(is) => Ok(i :: is)
+          case Err(e) => Err(e)
+        }
+        case None => Err("Int32.fromString")
+      }
+    }
+
   def semVer2Body(body: String): Result[String, List[Int32]] =
     let split = String.splitOn({substr = "."}, body);
     match List.length(split) {
-      case 3 => split |> List.map(Int32.fromString) |> Result.sequence
+      case 3 => parseInts(split)
       case _ => Err("Invalid format (illegal numbers of dots)")
     }
 
