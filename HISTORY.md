@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/KengoTODA/flix-semver2/compare/v1.0.1...v1.0.2) (2026-06-21)
+
+
+### Bug Fixes
+
+* support Flix 0.73 ([#146](https://github.com/KengoTODA/flix-semver2/issues/146)) ([1509164](https://github.com/KengoTODA/flix-semver2/commit/1509164dedc031913d40a031f9994737674f024c))
+
 ## [1.0.1](https://github.com/KengoTODA/flix-semver2/compare/v1.0.0...v1.0.1) (2022-03-22)
 
 
