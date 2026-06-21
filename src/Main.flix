@@ -1,15 +1,14 @@
-namespace SemVer2 {
+mod SemVer2 {
   type alias PreRelease = String
   type alias Build = String
 
-  enum SemVer2 with Eq {
+  pub enum SemVer2 with Eq {
     case Standard(Int32, Int32, Int32),
     case WithPreRelease(Int32, Int32, Int32, PreRelease)
     case WithBuild(Int32, Int32, Int32, Build)
     case WithPreReleaseAndBuild(Int32, Int32, Int32, PreRelease, Build)
   }
 
-  @Time(1) @Space(1)
   pub def getMajor(v: SemVer2): Int32 = match v {
     case Standard(x,_,_) => x
     case WithPreRelease(x,_,_,_) => x
@@ -17,7 +16,6 @@ namespace SemVer2 {
     case WithPreReleaseAndBuild(x,_,_,_,_) => x
   }
 
-  @Time(1) @Space(1)
   pub def getMinor(v: SemVer2): Int32 = match v {
     case Standard(_,y,_) => y
     case WithPreRelease(_,y,_,_) => y
@@ -25,7 +23,6 @@ namespace SemVer2 {
     case WithPreReleaseAndBuild(_,y,_,_,_) => y
   }
 
-  @Time(1) @Space(1)
   pub def getPatch(v: SemVer2): Int32 = match v {
     case Standard(_,_,z) => z
     case WithPreRelease(_,_,z,_) => z
@@ -33,7 +30,6 @@ namespace SemVer2 {
     case WithPreReleaseAndBuild(_,_,z,_,_) => z
   }
 
-  @Time(1) @Space(1)
   pub def getPreRelease(v: SemVer2): Option[String] = match v {
     case Standard(_,_,_) => None
     case WithPreRelease(_,_,_,p) => Some(p)
@@ -41,7 +37,6 @@ namespace SemVer2 {
     case WithPreReleaseAndBuild(_,_,_,p,_) => Some(p)
   }
 
-  @Time(1) @Space(1)
   pub def getBuild(v: SemVer2): Option[String] = match v {
     case Standard(_,_,_)=> None
     case WithPreRelease(_,_,_,_) => None
@@ -63,8 +58,8 @@ namespace SemVer2 {
 
     let lp = getPreRelease(l);
     let rp = getPreRelease(r);
-    if (Option.isEmpty(lp) and (not Option.isEmpty(rp))) GreaterThan
-    else if (Option.isEmpty(rp) and (not Option.isEmpty(lp))) LessThan
+    if (Option.isEmpty(lp) and (not Option.isEmpty(rp))) Comparison.GreaterThan
+    else if (Option.isEmpty(rp) and (not Option.isEmpty(lp))) Comparison.LessThan
     else Option.getWithDefault("", lp) `compare` Option.getWithDefault("", rp)
 
   def compareBuild(l: SemVer2, r: SemVer2): Comparison =
@@ -73,28 +68,27 @@ namespace SemVer2 {
     let lb = getBuild(l);
     let rb = getBuild(r);
 
-    if (Option.isEmpty(lb) and (not Option.isEmpty(rb))) GreaterThan
-    else if (Option.isEmpty(rb) and (not Option.isEmpty(lb))) LessThan
+    if (Option.isEmpty(lb) and (not Option.isEmpty(rb))) Comparison.GreaterThan
+    else if (Option.isEmpty(rb) and (not Option.isEmpty(lb))) Comparison.LessThan
     else Option.getWithDefault("", lb) `compare` Option.getWithDefault("", rb)
 
   instance Order[SemVer2] {
-    @Time(1) @Space(1)
     pub def compare(l: SemVer2, r: SemVer2): Comparison =
       if      (getMajor(l) != getMajor(r)) Comparison.fromInt32(getMajor(l) - getMajor(r))
       else if (getMinor(l) != getMinor(r)) Comparison.fromInt32(getMinor(l) - getMinor(r))
       else if (getPatch(l) != getPatch(r)) Comparison.fromInt32(getPatch(l) - getPatch(r))
-      else if (comparePreRelease(l, r) != EqualTo) comparePreRelease(l, r)
+      else if (comparePreRelease(l, r) != Comparison.EqualTo) comparePreRelease(l, r)
       else compareBuild(l, r)
   }
 
-  def semVer2Body(body: String): Result[List[Int32], String] =
+  def semVer2Body(body: String): Result[String, List[Int32]] =
     let split = String.splitOn({substr = "."}, body);
     match List.length(split) {
       case 3 => split |> List.map(Int32.fromString) |> Result.sequence
       case _ => Err("Invalid format (illegal numbers of dots)")
     }
 
-  def map(preRelease: PreRelease, build: Build, l: List[Int32]): Result[SemVer2, String] =
+  def map(preRelease: PreRelease, build: Build, l: List[Int32]): Result[String, SemVer2] =
     match l {
       case x :: y :: z :: Nil => Ok(match (preRelease,build) {
         case ("", "") => Standard(x, y, z)
@@ -105,10 +99,10 @@ namespace SemVer2 {
       case _ => Err("Unreachable")
     }
 
-  pub def parse(string: String): Result[SemVer2, String] =
+  pub def parse(string: String): Result[String, SemVer2] =
     let (others, build) = String.breakOnLeft({substr = "+"}, string);
     let (body, preRelease) = String.breakOnLeft({substr = "-"}, others);
-    semVer2Body(body) |> Result.flatMap(split: List[Int32] -> {
+    semVer2Body(body) |> Result.flatMap(split -> {
       split |> map(preRelease |> String.drop(1), build |> String.drop(1))
     })
 }
