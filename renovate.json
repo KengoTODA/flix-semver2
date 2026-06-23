@@ -37,7 +37,7 @@
       "automerge": false
     },
     {
-      "description": "Keep Flix compiler updates manual because they can require source compatibility fixes and checksum refreshes.",
+      "description": "Keep Flix compiler updates manual because they can require source compatibility fixes.",
       "matchPackageNames": [
         "flix/flix"
       ],
@@ -54,7 +54,7 @@
         "FLIX_VERSION:\\s+(?<currentValue>v?\\d+\\.\\d+\\.\\d+)\\n\\s+FLIX_SHA256:\\s+(?<currentDigest>[a-f0-9]+)"
       ],
       "depNameTemplate": "flix/flix",
-      "datasourceTemplate": "github-releases",
+      "datasourceTemplate": "github-release-attachments",
       "versioningTemplate": "semver"
     }
   ]
