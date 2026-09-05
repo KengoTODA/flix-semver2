@@ -2,7 +2,7 @@
   "name": "flix-semver2",
   "version": "1.0.0",
   "description": "A package handling the semantic versioning v2",
-  "packageManager": "pnpm@11.8.0",
+  "packageManager": "pnpm@11.25.0",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/KengoTODA/flix-semver2.git"

@@ -28,6 +28,8 @@ $ ls lib/KengoTODA/flix-semver2/flix-semver2.fpkg
 # Development
 
 This repository is built with the official Flix jar and pnpm.
+Use Node.js compatible with `engines.node` and the pnpm version specified in
+`packageManager` in [package.json](package.json).
 
 ```console
 $ curl --fail --location --output flix.jar https://github.com/flix/flix/releases/download/v0.73.0/flix.jar
