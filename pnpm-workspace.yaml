@@ -1,4 +1,5 @@
 minimumReleaseAge: 4320
+packageManagerStrictVersion: true
 strictDepBuilds: true
 trustPolicy: no-downgrade
 trustPolicyIgnoreAfter: 43200
